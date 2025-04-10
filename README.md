@@ -357,4 +357,25 @@ Kalau mau lebih teratur:
 
 ---
 
-Mau aku bantu buatkan `start.sh` & `stop.sh` script untuk Python, Node.js, dan Golang?
+#!/bin/bash
+dnf update -y
+dnf install -y git python3-pip nodejs golang -y
+
+# Clone repo
+git clone https://github.com/Dcyii/klaten-api.git
+cd klaten-api
+
+# Python
+cd python-api
+pip install -r requirements.txt
+nohup python3 app.py &
+
+# Node.js
+cd ../nodejs-api
+npm install
+nohup node app.js &
+
+# Golang
+cd ../golang-api
+nohup go run main.go &
+
