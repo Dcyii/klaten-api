@@ -402,6 +402,8 @@ nohup node app.js &
 
 # Golang
 cd ../golang-api
+go mod init golang-api
+go get github.com/aws/aws-sdk-go
 nohup go run main.go &
 ```
 
