@@ -76,20 +76,20 @@
 ### 7. **Struktur Folder Lokal**
 ```
 klaten-api/
-├── api-python/
+├── python-api/
 │   ├── app.py
 │   └── requirements.txt
-├── api-nodejs/
+├── nodejs-api/
 │   ├── app.js
 │   └── package.json
-└── api-golang/
+└── golang-api/
     └── main.go
 ```
 
 ---
 
 ### 8. **Contoh Isi File**
-#### ✅ Python (`api-python/app.py`)
+#### ✅ Python (`python-api/app.py`)
 ```python
 from flask import Flask, request, jsonify
 import boto3
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000)
 ```
 
-#### ✅ Node.js (`api-nodejs/app.js`)
+#### ✅ Node.js (`nodejs-api/app.js`)
 ```js
 const express = require('express');
 const AWS = require('aws-sdk');
@@ -134,7 +134,7 @@ app.post('/kecamatan', (req, res) => {
 app.listen(3001, () => console.log('Node.js API running on port 3001'));
 ```
 
-#### ✅ Golang (`api-golang/main.go`)
+#### ✅ Golang (`golang-api/main.go`)
 ```go
 package main
 
@@ -229,17 +229,17 @@ cd klaten-api
 - Jalankan satu-satu:
 ```bash
 # Python
-cd api-python
+cd python-api
 pip install -r requirements.txt
 python3 app.py &
 
 # Node.js
-cd ../api-nodejs
+cd ../nodejs-api
 npm install
 node app.js &
 
 # Golang
-cd ../api-golang
+cd ../golang-api
 go run main.go &
 ```
 
