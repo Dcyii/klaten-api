@@ -1,5 +1,4 @@
 # klaten-api
-**satu per satu** secara **sangat jelas** dan **berurutan**.
 
 ---
 
