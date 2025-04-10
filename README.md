@@ -347,16 +347,41 @@ pkill node
 ```
 
 ---
-
-## 💡 Saran ke Depan
-
-Kalau mau lebih teratur:
-
-- Gunakan `nohup` atau `tmux` jika ingin **proses tetap berjalan setelah logout**
-- Atau buat `start.sh` dan `stop.sh` biar kamu tinggal jalanin sekali klik
+📌 **Jawaban singkatnya:**  
+> ❌ **Tidak otomatis berjalan, KECUALI** kamu **menambahkan script di User Data** saat membuat Launch Template atau EC2 instance-nya.
 
 ---
 
+## 📖 Penjelasan Berdasarkan Soal LKS Auto Scaling:
+
+Soal menyebut:
+> Menyiapkan Aplikasi API Node.js, Python, dan Golang  
+> Upload ke GitHub  
+> Clone ke EC2 Instance  
+> Jalankan API-nya  
+> Gunakan Auto Scaling Group dan Load Balancer
+
+---
+
+### 🔍 Artinya?
+
+Jika kamu membuat **Launch Template**, maka:
+
+| Tanpa User Data | Dengan User Data |
+|------------------|------------------|
+| ❌ API Node.js, Python, Go **tidak jalan otomatis** | ✅ API **langsung aktif** saat instance hidup |
+| Harus login SSH manual untuk run API | Tidak perlu login manual |
+| Tidak ideal untuk Auto Scaling | ✔️ **WAJIB** untuk Auto Scaling agar EC2 baru langsung aktif |
+
+---
+
+## ✨ Jadi Kesimpulan:
+> **Soal mengharapkan API bisa berjalan otomatis di EC2 hasil Auto Scaling**, maka kamu **harus menambahkan User Data** saat membuat Launch Template.
+
+---
+
+## 💡 Contoh User Data untuk Menjalankan Ketiga API:
+```bash
 #!/bin/bash
 dnf update -y
 dnf install -y git python3-pip nodejs golang -y
@@ -378,4 +403,11 @@ nohup node app.js &
 # Golang
 cd ../golang-api
 nohup go run main.go &
+```
 
+Dengan script ini:
+✅ Ketiga API langsung jalan otomatis  
+✅ Tidak perlu SSH manual  
+✅ Cocok untuk Auto Scaling dan Load Balancer
+
+---
