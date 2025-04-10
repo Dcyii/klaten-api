@@ -277,3 +277,84 @@ go run main.go &
   - Attach Load Balancer (jika sudah dibuat)
 
 ---
+
+Wah, kamu nemu situasi yang menarik! Yuk kita bahas biar kamu paham **kenapa Python dan Node.js tidak berhenti**, tapi **Golang langsung berhenti** setelah `Ctrl + C`:
+
+---
+
+## 🔍 Penyebab Perbedaan Perilaku
+
+### ✅ **1. Python & Node.js masih jalan karena kamu jalankan dengan `&` atau `nohup`**
+Contoh:
+```bash
+python3 app.py &
+node app.js &
+```
+
+Perintah `&` artinya:
+> **Jalankan proses di background**  
+Jadi walau kamu `Ctrl + C`, **hanya menghentikan shell utama**, proses tetap hidup di background!
+
+---
+
+### ❌ **2. Golang langsung mati karena dijalankan tanpa `&`**
+Contoh:
+```bash
+go run main.go
+```
+
+Saat kamu `Ctrl + C`, itu langsung menghentikan proses foreground, sehingga Go langsung mati.
+
+---
+
+## ✅ Cara Cek Proses yang Masih Berjalan
+
+Untuk memastikan, kamu bisa jalankan ini di EC2:
+
+```bash
+ps aux | grep app.py
+ps aux | grep app.js
+ps aux | grep main.go
+```
+
+Atau untuk melihat port langsung:
+```bash
+sudo lsof -i :3000   # Python
+sudo lsof -i :3001   # Node.js
+sudo lsof -i :3002   # Go
+```
+
+---
+
+## 🛑 Cara Menghentikan Python & Node.js yang Masih Hidup
+
+Setelah tahu PID-nya:
+
+```bash
+kill <PID>
+```
+
+Contoh:
+```bash
+kill 29903
+```
+
+Kalau ingin matikan semua proses Python dan Node.js sekaligus:
+
+```bash
+pkill -f app.py
+pkill node
+```
+
+---
+
+## 💡 Saran ke Depan
+
+Kalau mau lebih teratur:
+
+- Gunakan `nohup` atau `tmux` jika ingin **proses tetap berjalan setelah logout**
+- Atau buat `start.sh` dan `stop.sh` biar kamu tinggal jalanin sekali klik
+
+---
+
+Mau aku bantu buatkan `start.sh` & `stop.sh` script untuk Python, Node.js, dan Golang?
